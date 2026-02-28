@@ -1,0 +1,50 @@
+{
+    "manifest_version": 3,
+    "name": "autoLogin",
+    "version": "1.0.0",
+    "description": "autoLogin with secure local storage",
+    "permissions": [
+        "scripting",
+        "nativeMessaging",
+        "tabs",
+        "storage",
+        "webNavigation"
+    ],
+    "background": {
+        "service_worker": "service.js",
+        "type": "module"
+    },
+    "host_permissions": [
+        "*://login.example.com/*",
+        "*://login.example1.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://login.example.com/login*",
+                "*://login.example1.com/login*"
+            ],
+            "js": [
+                "utilsScripts/messageUtils.js",
+                "utilsScripts/accountUtils.js",
+                "utilsScripts/contentUtils.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://login.example.com/login*"
+            ],
+            "js": [
+                "contentScripts/example.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://login.example1.com/login*"
+            ],
+            "js": [
+                "contentScripts/example1.js"
+            ]
+        }
+    ]
+}
